@@ -22,24 +22,32 @@ function onSearch(e) {
     refs.loadMoreButton.classList.remove("is-hidden");
     refs.loadMoreButton.scrollIntoView({
         behavior: 'smooth',
-        block: 'top',
+        block: 'end',
     });
 }
 function fetchPhotos() {
     refs.loadMoreButton.setAttribute("disabled", "disabled");
     photosApiService.fetchPhotos()
-        .then(photos => renderMarkup(photos));
-        // .then(() => autoScrolling);
+        .then(photos => renderMarkup(photos))
+        .then(() => refs.loadMoreButton.scrollIntoView({
+            behavior: 'auto',
+            block: 'end',
+        }));
     refs.loadMoreButton.removeAttribute("disabled", "disabled");
 }
 
-function autoScrolling() {
-    const element = document.getElementById('load-btn');
-    element.scrollIntoView({
-        behavior: 'smooth',
-        block: 'end',
-    });
-}
+// function onLoadMore(e) {
+//     e.preventDefault();
+
+//     photosApiService.fetchPhotos()
+//         .then(photos => renderMarkup(photos))
+//         .then(() => refs.loadMoreButton.scrollIntoView({
+//             behavior: 'smooth',
+//             block: 'end',
+//         }));
+// }
+
+
 // refs.loadMoreButton.addEventListener('click', autoScrolling);
 
 
